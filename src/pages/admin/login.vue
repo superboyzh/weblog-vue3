@@ -67,6 +67,7 @@
               size="large"
               type="primary"
               @click="onSubmit"
+              :loading="loading"
               >登录</el-button
             >
           </el-form-item>
@@ -77,11 +78,11 @@
 </template>
 
 <script setup>
-// 引入 Element Plus 中的用户、锁图标
 import { User, Lock } from "@element-plus/icons-vue";
 import { login } from "@/api/admin/user";
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
+import { setToken } from "@/utils/auth";
 
 // 定义响应式的表单对象
 const form = reactive({
@@ -90,7 +91,7 @@ const form = reactive({
 });
 // 定义路由对象
 const router = useRouter();
-
+const loading = ref(false);
 // 表单引用
 const formRef = ref(null);
 // 表单验证规则
@@ -119,17 +120,42 @@ const onSubmit = () => {
       console.log("表单验证不通过");
       return false;
     }
+    loading.value = true;
     // 调用登录接口
-    login(form.username, form.password).then((res) => {
-      // 判断是否成功
-      if (res.data.success) {
-        // 跳转到后台首页
-        router.push("/admin/index");
-      } else {
-        // 提示错误信息
-        ElMessage.error(res.data.message);
-      }
-    });
+    login(form.username, form.password)
+      .then((res) => {
+        // 判断是否成功
+        if (res.success) {
+          setToken(res.data.token);
+          ElMessage.success("登录成功");
+          // 跳转到后台首页
+          router.push("/admin/index");
+        } else {
+          // 提示错误信息
+          ElMessage.error(res.message);
+        }
+      })
+      .finally(() => {
+        // 无论成功与否都要关闭 loading
+        loading.value = false;
+      });
   });
 };
+
+// 按回车键后，执行登录事件
+function onKeyUp(e) {
+  if (e.key == "Enter") {
+    onSubmit();
+  }
+}
+
+// 添加键盘监听
+onMounted(() => {
+  document.addEventListener("keyup", onKeyUp);
+});
+
+// 移除键盘监听
+onBeforeUnmount(() => {
+  document.removeEventListener("keyup", onKeyUp);
+});
 </script>
