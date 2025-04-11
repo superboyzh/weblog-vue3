@@ -33,8 +33,13 @@
           <span class="h-[1px] w-16 bg-gray-200"></span>
         </div>
         <!-- 引入 Element Plus 表单组件，移动端设置宽度为 5/6，PC 端设置为 2/5 -->
-        <el-form class="w-5/6 md:w-2/5">
-          <el-form-item>
+        <el-form
+          class="w-5/6 md:w-2/5"
+          ref="formRef"
+          :rules="rules"
+          :model="form"
+        >
+          <el-form-item prop="username">
             <!-- 输入框组件 -->
             <el-input
               v-model="form.username"
@@ -44,7 +49,7 @@
               clearable
             />
           </el-form-item>
-          <el-form-item>
+          <el-form-item prop="password">
             <!-- 密码框组件 -->
             <el-input
               v-model="form.password"
@@ -75,7 +80,7 @@
 // 引入 Element Plus 中的用户、锁图标
 import { User, Lock } from "@element-plus/icons-vue";
 import { login } from "@/api/admin/user";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 
 // 定义响应式的表单对象
@@ -86,17 +91,45 @@ const form = reactive({
 // 定义路由对象
 const router = useRouter();
 
-const onSubmit = async () => {
-  // 登录按钮点击事件
+// 表单引用
+const formRef = ref(null);
+// 表单验证规则
+const rules = {
+  username: [
+    {
+      required: true,
+      message: "用户名不能为空",
+      trigger: "blur",
+    },
+  ],
+  password: [
+    {
+      required: true,
+      message: "密码不能为空",
+      trigger: "blur",
+    },
+  ],
+};
+
+const onSubmit = () => {
   console.log("登录");
-  login(form.username, form.password).then((res) => {
-    console.log(res);
-    if (res.data.success) {
-      router.push("/admin/index");
-    } else {
-      // 登录失败，弹出提示
-      ElMessage.error(res.data.message);
+  // 先验证 form 表单字段
+  formRef.value.validate((valid) => {
+    if (!valid) {
+      console.log("表单验证不通过");
+      return false;
     }
+    // 调用登录接口
+    login(form.username, form.password).then((res) => {
+      // 判断是否成功
+      if (res.data.success) {
+        // 跳转到后台首页
+        router.push("/admin/index");
+      } else {
+        // 提示错误信息
+        ElMessage.error(res.data.message);
+      }
+    });
   });
 };
 </script>
