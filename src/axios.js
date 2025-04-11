@@ -28,6 +28,7 @@ instance.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    ElMessage.error(error.response.data.message || "请求失败");
     // 对响应错误做点什么
     return Promise.reject(error);
   }
