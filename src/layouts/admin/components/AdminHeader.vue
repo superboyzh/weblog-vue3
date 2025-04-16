@@ -4,15 +4,32 @@
     <!-- 左边栏收缩、展开 -->
     <div
       class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
+      @click="handleMenuWidth"
     >
       <el-icon>
-        <Fold />
+        <Fold v-if="menuStore.menuWidth == '250px'" />
+        <Expand v-else />
       </el-icon>
     </div>
 
     <!-- 右边容器，通过 ml-auto 让其在父容器的右边 -->
     <div class="ml-auto flex">
-      <!-- 点击全屏展示 -->
+      <!-- 点击刷新页面 -->
+      <el-tooltip
+        class="box-item"
+        effect="dark"
+        content="刷新"
+        placement="bottom"
+      >
+        <div
+          class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
+          @click="handleRefresh"
+        >
+          <el-icon>
+            <Refresh />
+          </el-icon>
+        </div>
+      </el-tooltip>
       <!-- 点击全屏展示 -->
       <el-tooltip
         class="box-item"
@@ -22,9 +39,11 @@
       >
         <div
           class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 mr-2 hover:bg-gray-200"
+          @click="toggle"
         >
           <el-icon>
-            <FullScreen />
+            <FullScreen v-if="!isFullscreen" />
+            <Aim v-else />
           </el-icon>
         </div>
       </el-tooltip>
@@ -55,3 +74,19 @@
     </div>
   </div>
 </template>
+<script setup>
+import { useMenuStore } from "@/stores/menu";
+// 引入 useFullscreen
+import { useFullscreen } from "@vueuse/core";
+const menuStore = useMenuStore();
+
+const handleMenuWidth = () => {
+  // 动态设置菜单的宽度大小
+  menuStore.handleMenuWidth();
+};
+
+// isFullscreen 表示当前是否处于全屏；toggle 用于动态切换全屏、非全屏
+const { isFullscreen, toggle } = useFullscreen();
+
+const handleRefresh = () => location.reload();
+</script>
