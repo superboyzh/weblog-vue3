@@ -83,7 +83,7 @@ import { User, Lock } from "@element-plus/icons-vue";
 import { login } from "@/api/admin/user";
 import { reactive, ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
-import { setToken } from "@/utils/auth";
+import { setToken } from "@/utils/cookie";
 
 // 定义响应式的表单对象
 const form = reactive({

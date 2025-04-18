@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getToken } from "@/utils/auth";
+import { getToken } from "@/utils/cookie";
 
 const instance = axios.create({
   baseURL: "/api", // 你的 API 基础 URL

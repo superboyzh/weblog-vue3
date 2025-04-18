@@ -5,24 +5,25 @@
     :style="{ left: menuStore.menuWidth }"
   >
     <el-tabs
-      v-model="editableTabsValue"
+      v-model="activeTab"
       type="card"
       class="demo-tabs"
-      closable
       @tab-remove="removeTab"
+      @tab-change="tabChange"
       style="min-width: 10px"
     >
       <el-tab-pane
-        v-for="item in editableTabs"
-        :key="item.name"
+        v-for="item in tabList"
+        :key="item.path"
         :label="item.title"
-        :name="item.name"
+        :name="item.path"
+        :closable="item.path != '/admin/index'"
       >
       </el-tab-pane>
     </el-tabs>
     <!-- 右侧下拉菜单 -->
     <span class="ml-auto flex items-center justify-center h-[32px] w-[32px]">
-      <el-dropdown>
+      <el-dropdown @command="handleCloseTab">
         <span class="el-dropdown-link">
           <el-icon>
             <arrow-down />
@@ -30,8 +31,8 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>关闭其他</el-dropdown-item>
-            <el-dropdown-item>关闭全部</el-dropdown-item>
+            <el-dropdown-item command="closeOthers">关闭其他</el-dropdown-item>
+            <el-dropdown-item command="closeAll">关闭全部</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -43,49 +44,102 @@
 <script setup>
 import { ref } from "vue";
 import { useMenuStore } from "@/stores/menu";
+import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
+import { setTabList, getTabList } from "@/utils/cookie";
 
-const menuStore = useMenuStore();
-
-let tabIndex = 2;
-const editableTabsValue = ref("2");
-const editableTabs = ref([
+const tabList = ref([
   {
-    title: "Tab 1",
-    name: "1",
-    content: "Tab 1 content",
-  },
-  {
-    title: "Tab 2",
-    name: "2",
-    content: "Tab 2 content",
+    title: "仪表盘",
+    path: "/admin/index",
   },
 ]);
 
-const addTab = (targetName) => {
-  const newTabName = `${++tabIndex}`;
-  editableTabs.value.push({
-    title: "New Tab",
-    name: newTabName,
-    content: "New Tab content",
-  });
-  editableTabsValue.value = newTabName;
-};
-const removeTab = (targetName) => {
-  const tabs = editableTabs.value;
-  let activeName = editableTabsValue.value;
-  if (activeName === targetName) {
-    tabs.forEach((tab, index) => {
-      if (tab.name === targetName) {
-        const nextTab = tabs[index + 1] || tabs[index - 1];
-        if (nextTab) {
-          activeName = nextTab.name;
-        }
-      }
-    });
+// 添加 Tab 标签页
+const addTab = (tab) => {
+  // 标签是否不存在
+  let isTabNotExisted =
+    tabList.value.findIndex((item) => item.path == tab.path) == -1;
+  // 如果不存在
+  if (isTabNotExisted) {
+    // 添加标签
+    tabList.value.push(tab);
   }
+  // 存储 tabList 到 cookie 中
+  setTabList(tabList.value);
+};
 
-  editableTabsValue.value = activeName;
-  editableTabs.value = tabs.filter((tab) => tab.name !== targetName);
+const initTabList = () => {
+  // 从 cookie 中获取缓存起来的标签导航栏数据
+  let tabs = getTabList();
+  // 若不为空，则赋值
+  if (tabs) {
+    tabList.value = tabs;
+  }
+};
+initTabList();
+
+onBeforeRouteUpdate((to, from, next) => {
+  activeTab.value = to.path;
+  // 设置被激活的 Tab 标签
+  activeTab.value = to.path;
+  // 添加 Tab 标签页
+  addTab({
+    title: to.meta.title,
+    path: to.path,
+  });
+  next();
+});
+
+const menuStore = useMenuStore();
+const route = useRoute();
+const router = useRouter();
+
+const tabChange = (path) => {
+  // 设置被激活的 Tab 标签
+  activeTab.value = path;
+  // 路由跳转
+  router.push(path);
+};
+
+// 当前被选中的 tab
+const activeTab = ref(route.path);
+
+const removeTab = (targetName) => {
+  const activeName = activeTab.value;
+  const index = tabList.value.findIndex((tab) => tab.path === targetName);
+
+  if (index !== -1) {
+    // 如果关闭的是当前激活的标签，激活相邻的标签
+    if (activeName === targetName) {
+      const nextTab = tabList.value[index + 1] || tabList.value[index - 1];
+      if (nextTab) {
+        activeTab.value = nextTab.path;
+      }
+    }
+    // 移除目标标签
+    tabList.value.splice(index, 1);
+  }
+};
+const handleCloseTab = (command) => {
+  // 首页路由
+  let indexPath = "/admin/index";
+  // 处理关闭其他
+  if (command == "closeOthers") {
+    // 仅过滤出首页和当前页
+    tabList.value = tabList.value.filter(
+      (tab) => tab.path == indexPath || tab.path == activeTab.value
+    );
+  } else if (command == "closeAll") {
+    // 处理关闭全部
+    // 切换回首页
+    activeTab.value = indexPath;
+    // 只保留首页
+    tabList.value = tabList.value.filter((tab) => tab.path == indexPath);
+    // 切换标签页
+    tabChange(activeTab.value);
+  }
+  // 设置到 cookie 中
+  setTabList(tabList.value);
 };
 </script>
 

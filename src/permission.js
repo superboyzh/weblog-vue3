@@ -1,5 +1,5 @@
 import router from "@/router/index";
-import { getToken } from "@/utils/auth";
+import { getToken } from "@/utils/cookie";
 import { showPageLoading, hidePageLoading } from "@/utils/nprogress";
 // 全局路由前置守卫
 router.beforeEach((to, from, next) => {
