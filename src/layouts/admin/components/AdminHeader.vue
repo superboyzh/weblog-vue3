@@ -59,7 +59,7 @@
             :size="25"
             src="https://img.quanxiaoha.com/quanxiaoha/f97361c0429d4bb1bc276ab835843065.jpg"
           />
-          Admin
+          {{ userStore.userInfo.username }}
           <el-icon class="el-icon--right">
             <arrow-down />
           </el-icon>
@@ -78,7 +78,9 @@
 import { useMenuStore } from "@/stores/menu";
 // 引入 useFullscreen
 import { useFullscreen } from "@vueuse/core";
+import { useUserStore } from "@/stores/user";
 const menuStore = useMenuStore();
+const userStore = useUserStore();
 
 const handleMenuWidth = () => {
   // 动态设置菜单的宽度大小

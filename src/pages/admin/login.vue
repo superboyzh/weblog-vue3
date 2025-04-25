@@ -84,7 +84,9 @@ import { login } from "@/api/admin/user";
 import { reactive, ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import { setToken } from "@/utils/cookie";
+import { useUserStore } from "@/stores/user";
 
+const userStore = useUserStore();
 // 定义响应式的表单对象
 const form = reactive({
   username: "",
@@ -128,10 +130,13 @@ const onSubmit = () => {
         // 判断是否成功
         if (res.success) {
           setToken(res.data.token);
+          // 获取用户信息，并存储到全局状态中
+          userStore.setUserInfo();
           ElMessage.success("登录成功");
           // 跳转到后台首页
           router.push("/admin/index");
         } else {
+          form.password = "";
           // 提示错误信息
           ElMessage.error(res.message);
         }
