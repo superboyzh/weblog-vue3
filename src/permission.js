@@ -1,6 +1,6 @@
 import router from "@/router/index";
 import { getToken } from "@/utils/cookie";
-import { showPageLoading, hidePageLoading } from "@/utils/nprogress";
+import { showPageLoading, hidePageLoading } from "@/utils/util";
 // 全局路由前置守卫
 router.beforeEach((to, from, next) => {
   console.log("==> 全局路由前置守卫");
