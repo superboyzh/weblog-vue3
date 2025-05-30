@@ -43,7 +43,8 @@
       </el-table>
       <div class="mt-10 flex justify-center">
         <el-pagination v-model:current-page="current" v-model:page-size="size" :page-sizes="[10, 20, 50]" :small="false"
-          :background="true" layout="total, sizes, prev, pager, next, jumper" :total="total" />
+          :background="true" layout="total, sizes, prev, pager, next, jumper" :total="total"
+          @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>
 
     </el-card>
@@ -139,6 +140,16 @@ const getTableData = () => {
 }
 getTableData()
 
+// 每页展示数量变更事件
+const handleSizeChange = (chooseSize) => {
+  size.value = chooseSize
+  getTableData()
+}
+const handleCurrentChange = (choosePage) => {
+  console.log('选择的页码' + choosePage)
+  current.value = choosePage
+  getTableData()
+}
 const reset = () => {
   searchCategoryName.value = ''
   pickDate.value = ''

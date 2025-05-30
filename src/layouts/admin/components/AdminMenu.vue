@@ -1,20 +1,13 @@
 <template>
-  <div
-    class="bg-slate-800 h-screen text-white menu-container transition-all"
-    :style="{ width: menuStore.menuWidth }"
-  >
+  <div class="fixed overflow-y-auto bg-slate-800 h-screen text-white menu-container transition-all"
+    :style="{ width: menuStore.menuWidth }">
     <!-- 顶部 Logo, 指定高度为 64px, 和右边的 Header 头保持一样高 -->
     <div class="flex items-center justify-center h-[64px]">
       <img src="@/assets/weblog-logo.png" class="h-[30px]" />
     </div>
 
     <!-- 下方菜单 -->
-    <el-menu
-      :default-active="defaultActive"
-      @select="handleSelect"
-      :collapse="isCollapse"
-      :collapse-transition="false"
-    >
+    <el-menu :default-active="defaultActive" @select="handleSelect" :collapse="isCollapse" :collapse-transition="false">
       <template v-for="(item, index) in menus" :key="index">
         <el-menu-item :index="item.path">
           <el-icon>
