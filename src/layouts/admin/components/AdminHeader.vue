@@ -3,8 +3,7 @@
   <el-affix :offset="0">
     <div class="bg-white h-[64px] flex pr-4 border-b border-slate-100">
       <!-- 左边栏收缩、展开 -->
-      <div class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
-        @click="handleMenuWidth">
+      <div class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200" @click="handleMenuWidth">
         <el-icon>
           <Fold v-if="menuStore.menuWidth == '250px'" />
           <Expand v-else />
@@ -15,8 +14,7 @@
       <div class="ml-auto flex">
         <!-- 点击刷新页面 -->
         <el-tooltip class="box-item" effect="dark" content="刷新" placement="bottom">
-          <div class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200"
-            @click="handleRefresh">
+          <div class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 hover:bg-gray-200" @click="handleRefresh">
             <el-icon>
               <Refresh />
             </el-icon>
@@ -24,9 +22,7 @@
         </el-tooltip>
         <!-- 点击全屏展示 -->
         <el-tooltip class="box-item" effect="dark" content="全屏" placement="bottom">
-          <div
-            class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 mr-2 hover:bg-gray-200"
-            @click="toggle">
+          <div class="w-[42px] h-[64px] cursor-pointer flex items-center justify-center text-gray-700 mr-2 hover:bg-gray-200" @click="toggle">
             <el-icon>
               <FullScreen v-if="!isFullscreen" />
               <Aim v-else />
@@ -38,8 +34,7 @@
         <el-dropdown class="flex items-center justify-center" @command="handleCommand">
           <span class="el-dropdown-link flex items-center justify-center text-gray-700 text-xs">
             <!-- 头像 Avatar -->
-            <el-avatar class="mr-2" :size="25"
-              src="https://img.quanxiaoha.com/quanxiaoha/f97361c0429d4bb1bc276ab835843065.jpg" />
+            <el-avatar class="mr-2" :size="25" src="https://img.quanxiaoha.com/quanxiaoha/f97361c0429d4bb1bc276ab835843065.jpg" />
             {{ userStore.userInfo.username }}
             <el-icon class="el-icon--right">
               <arrow-down />
@@ -53,20 +48,24 @@
           </template>
         </el-dropdown>
         <!-- 修改密码 -->
-        <el-dialog v-model="dialogVisible" title="修改密码" width="40%" :draggable="true" :close-on-click-modal="false"
-          :close-on-press-escape="false">
+        <el-dialog
+          v-model="dialogVisible"
+          title="修改密码"
+          width="40%"
+          :draggable="true"
+          :close-on-click-modal="false"
+          :close-on-press-escape="false"
+        >
           <el-form ref="formRef" :rules="rules" :model="form">
             <el-form-item label="用户名" prop="username" label-width="120px">
               <!-- 输入框组件 -->
               <el-input size="large" v-model="form.username" placeholder="请输入用户名" clearable disabled />
             </el-form-item>
             <el-form-item label="密码" prop="password" label-width="120px">
-              <el-input size="large" type="password" v-model="form.password" placeholder="请输入密码" clearable
-                show-password />
+              <el-input size="large" type="password" v-model="form.password" placeholder="请输入密码" clearable show-password />
             </el-form-item>
             <el-form-item label="确认密码" prop="rePassword" label-width="120px">
-              <el-input size="large" type="password" v-model="form.rePassword" placeholder="请确认密码" clearable
-                show-password />
+              <el-input size="large" type="password" v-model="form.rePassword" placeholder="请确认密码" clearable show-password />
             </el-form-item>
           </el-form>
 
@@ -80,7 +79,6 @@
       </div>
     </div>
   </el-affix>
-
 </template>
 <script setup>
 import { ref, reactive, watch } from "vue";
@@ -122,7 +120,7 @@ const formRef = ref(null);
 const form = reactive({
   username: userStore.userInfo.username || "",
   password: "",
-  rePassword: "",
+  rePassword: ""
 });
 
 // 规则校验
@@ -131,23 +129,23 @@ const rules = {
     {
       required: true,
       message: "用户名不能为空",
-      trigger: "blur",
-    },
+      trigger: "blur"
+    }
   ],
   password: [
     {
       required: true,
       message: "密码不能为空",
-      trigger: "blur",
-    },
+      trigger: "blur"
+    }
   ],
   rePassword: [
     {
       required: true,
       message: "确认密码不能为空",
-      trigger: "blur",
-    },
-  ],
+      trigger: "blur"
+    }
+  ]
 };
 
 const submitForm = () => {

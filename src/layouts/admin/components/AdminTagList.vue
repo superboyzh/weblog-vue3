@@ -4,21 +4,8 @@
     class="fixed top-[64px] h-[44px] px-2 right-0 z-50 flex items-center bg-white transition-all duration-300 shadow"
     :style="{ left: menuStore.menuWidth }"
   >
-    <el-tabs
-      v-model="activeTab"
-      type="card"
-      class="demo-tabs"
-      @tab-remove="removeTab"
-      @tab-change="tabChange"
-      style="min-width: 10px"
-    >
-      <el-tab-pane
-        v-for="item in tabList"
-        :key="item.path"
-        :label="item.title"
-        :name="item.path"
-        :closable="item.path != '/admin/index'"
-      >
+    <el-tabs v-model="activeTab" type="card" class="demo-tabs" @tab-remove="removeTab" @tab-change="tabChange" style="min-width: 10px">
+      <el-tab-pane v-for="item in tabList" :key="item.path" :label="item.title" :name="item.path" :closable="item.path != '/admin/index'">
       </el-tab-pane>
     </el-tabs>
     <!-- 右侧下拉菜单 -->
@@ -50,15 +37,14 @@ import { setTabList, getTabList } from "@/utils/cookie";
 const tabList = ref([
   {
     title: "仪表盘",
-    path: "/admin/index",
-  },
+    path: "/admin/index"
+  }
 ]);
 
 // 添加 Tab 标签页
 const addTab = (tab) => {
   // 标签是否不存在
-  let isTabNotExisted =
-    tabList.value.findIndex((item) => item.path == tab.path) == -1;
+  let isTabNotExisted = tabList.value.findIndex((item) => item.path == tab.path) == -1;
   // 如果不存在
   if (isTabNotExisted) {
     // 添加标签
@@ -85,7 +71,7 @@ onBeforeRouteUpdate((to, from, next) => {
   // 添加 Tab 标签页
   addTab({
     title: to.meta.title,
-    path: to.path,
+    path: to.path
   });
   next();
 });
@@ -126,9 +112,7 @@ const handleCloseTab = (command) => {
   // 处理关闭其他
   if (command == "closeOthers") {
     // 仅过滤出首页和当前页
-    tabList.value = tabList.value.filter(
-      (tab) => tab.path == indexPath || tab.path == activeTab.value
-    );
+    tabList.value = tabList.value.filter((tab) => tab.path == indexPath || tab.path == activeTab.value);
   } else if (command == "closeAll") {
     // 处理关闭全部
     // 切换回首页

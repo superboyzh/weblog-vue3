@@ -29,6 +29,6 @@ export const useUserStore = defineStore(
   },
   {
     // 开启持久化
-    persist: true,
+    persist: true
   }
 );

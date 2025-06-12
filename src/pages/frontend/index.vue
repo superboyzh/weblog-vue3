@@ -1,18 +1,9 @@
 <template>
   <nav class="bg-white border-gray-200 border-b dark:bg-gray-900">
-    <div
-      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-    >
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="/" class="flex items-center">
-        <img
-          src="https://flowbite.com/docs/images/logo.svg"
-          class="h-8 mr-3"
-          alt="Flowbite Logo"
-        />
-        <span
-          class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-          >ZZZHHH博客</span
-        >
+        <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Flowbite Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ZZZHHH博客</span>
       </a>
       <div class="flex md:order-2 items-center">
         <button
@@ -22,13 +13,7 @@
           aria-expanded="false"
           class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1"
         >
-          <svg
-            class="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20"
-          >
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
             <path
               stroke="currentColor"
               stroke-linecap="round"
@@ -40,9 +25,7 @@
           <span class="sr-only">Search</span>
         </button>
         <div class="relative hidden md:block mr-2">
-          <div
-            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-          >
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
               class="w-4 h-4 text-gray-500 dark:text-gray-400"
               aria-hidden="true"
@@ -68,12 +51,7 @@
           />
         </div>
         <!-- 登录 -->
-        <div
-          class="text-gray-900 ml-1 mr-1 hover:text-blue-700 cursor-pointer"
-          @click="$router.push('/login')"
-        >
-          登录
-        </div>
+        <div class="text-gray-900 ml-1 mr-1 hover:text-blue-700 cursor-pointer" @click="$router.push('/login')">登录</div>
         <button
           data-collapse-toggle="navbar-search"
           type="button"
@@ -82,31 +60,14 @@
           aria-expanded="false"
         >
           <span class="sr-only">Open main menu</span>
-          <svg
-            class="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
           </svg>
         </button>
       </div>
-      <div
-        class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-        id="navbar-search"
-      >
+      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
         <div class="relative mt-3 md:hidden">
-          <div
-            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-          >
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
               class="w-4 h-4 text-gray-500 dark:text-gray-400"
               aria-hidden="true"

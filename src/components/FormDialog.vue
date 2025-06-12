@@ -1,6 +1,13 @@
 <template>
-  <el-dialog v-model="dialogVisible" :title="title" :width="width" :destroy-on-close="destroyOnClose" :draggable="true"
-    :close-on-click-modal="false" :close-on-press-escape="false">
+  <el-dialog
+    v-model="dialogVisible"
+    :title="title"
+    :width="width"
+    :destroy-on-close="destroyOnClose"
+    :draggable="true"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
     <slot></slot>
     <template #footer>
       <span class="dialog-footer">
@@ -14,13 +21,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 // 对外暴露属性
 const props = defineProps({
   title: String, // 字段类型
   width: {
     type: String,
-    default: '40%' // 默认值
+    default: "40%" // 默认值
   },
   destroyOnClose: {
     type: Boolean,
@@ -28,25 +35,25 @@ const props = defineProps({
   },
   confirmText: {
     type: String,
-    default: '提交'
+    default: "提交"
   }
-})
-const btnLoading = ref(false) // 确认按钮加载 loading
+});
+const btnLoading = ref(false); // 确认按钮加载 loading
 // 显示 loading
-const showBtnLoading = () => btnLoading.value = true
+const showBtnLoading = () => (btnLoading.value = true);
 // 隐藏 loading
-const closeBtnLoading = () => btnLoading.value = false
+const closeBtnLoading = () => (btnLoading.value = false);
 
-const dialogVisible = ref(false)
+const dialogVisible = ref(false);
 
 // 打开
-const open = () => dialogVisible.value = true
+const open = () => (dialogVisible.value = true);
 // 关闭
-const close = () => dialogVisible.value = false
+const close = () => (dialogVisible.value = false);
 
 // 对外暴露一个 submit 方法
-const emit = defineEmits(['submit'])
-const submit = () => emit('submit')
+const emit = defineEmits(["submit"]);
+const submit = () => emit("submit");
 
 // 暴露给父组件
 defineExpose({
@@ -54,6 +61,5 @@ defineExpose({
   close,
   showBtnLoading,
   closeBtnLoading
-})
-
+});
 </script>

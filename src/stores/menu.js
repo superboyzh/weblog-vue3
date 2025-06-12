@@ -16,6 +16,6 @@ export const useMenuStore = defineStore(
   },
   {
     // 开启持久化
-    persist: true,
+    persist: true
   }
 );

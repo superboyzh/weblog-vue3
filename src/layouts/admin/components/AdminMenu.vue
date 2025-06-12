@@ -1,6 +1,5 @@
 <template>
-  <div class="fixed overflow-y-auto bg-slate-800 h-screen text-white menu-container transition-all"
-    :style="{ width: menuStore.menuWidth }">
+  <div class="fixed overflow-y-auto bg-slate-800 h-screen text-white menu-container transition-all" :style="{ width: menuStore.menuWidth }">
     <!-- 顶部 Logo, 指定高度为 64px, 和右边的 Header 头保持一样高 -->
     <div class="flex items-center justify-center h-[64px]">
       <img src="@/assets/weblog-logo.png" class="h-[30px]" />
@@ -38,28 +37,33 @@ const menus = [
   {
     name: "仪表盘",
     icon: "Monitor",
-    path: "/admin/index",
+    path: "/admin/index"
   },
   {
     name: "文章管理",
     icon: "Document",
-    path: "/admin/article/list",
+    path: "/admin/article/list"
   },
   {
     name: "分类管理",
     icon: "FolderOpened",
-    path: "/admin/category/list",
+    path: "/admin/category/list"
   },
   {
     name: "标签管理",
     icon: "PriceTag",
-    path: "/admin/tag/list",
+    path: "/admin/tag/list"
   },
   {
     name: "博客设置",
     icon: "Setting",
-    path: "/admin/blog/setting",
+    path: "/admin/blog/setting"
   },
+  {
+    name: "测试页面",
+    icon: "Setting",
+    path: "/admin/blog/test"
+  }
 ];
 
 const handleSelect = (path) => {

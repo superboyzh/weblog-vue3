@@ -3,21 +3,16 @@
     <!-- 默认占两列，order 用于指定排列顺序，md 用于适配非移动端（PC 端） -->
     <div class="col-span-2 order-2 p-10 md:col-span-1 md:order-1 bg-slate-900">
       <!-- 指定为 flex 布局，并设置为屏幕垂直水平居中，高度为 100% -->
-      <div
-        class="flex justify-center items-center h-full flex-col animate__animated animate__bounceInLeft animate__fast">
+      <div class="flex justify-center items-center h-full flex-col animate__animated animate__bounceInLeft animate__fast">
         <h2 class="font-bold text-4xl mb-7 text-white">Weblog 博客登录</h2>
-        <p class="text-white">
-          一款由 Spring Boot + Mybaits Plus + Vue 3.2 + Vite 4
-          开发的前后端分离博客。
-        </p>
+        <p class="text-white">一款由 Spring Boot + Mybaits Plus + Vue 3.2 + Vite 4 开发的前后端分离博客。</p>
         <!-- 指定图片宽度为父级元素的 1/2 -->
         <img src="@/assets/background.png" class="w-1/2 mt-10" />
       </div>
     </div>
     <div class="col-span-2 order-1 md:col-span-1 md:order-2 bg-white">
       <!-- flex-col 用于指定子元素垂直排列 -->
-      <div
-        class="flex justify-center items-center h-full flex-col animate__animated animate__bounceInRight animate__fast">
+      <div class="flex justify-center items-center h-full flex-col animate__animated animate__bounceInRight animate__fast">
         <!-- 大标题，设置字体粗细、大小、下边距 -->
         <h1 class="font-bold text-4xl mb-5">欢迎回来</h1>
         <!-- 设置 flex 布局，内容垂直水平居中，文字颜色，以及子内容水平方向 x 轴间距 -->
@@ -36,8 +31,7 @@
           </el-form-item>
           <el-form-item prop="password">
             <!-- 密码框组件 -->
-            <el-input v-model="form.password" size="large" type="password" placeholder="请输入用户名" :prefix-icon="Lock"
-              clearable show-password />
+            <el-input v-model="form.password" size="large" type="password" placeholder="请输入用户名" :prefix-icon="Lock" clearable show-password />
           </el-form-item>
           <el-form-item>
             <!-- 登录按钮，宽度设置为 100% -->
@@ -61,7 +55,7 @@ const userStore = useUserStore();
 // 定义响应式的表单对象
 const form = reactive({
   username: "admin",
-  password: "admin",
+  password: "admin"
 });
 // 定义路由对象
 const router = useRouter();
@@ -74,16 +68,16 @@ const rules = {
     {
       required: true,
       message: "用户名不能为空",
-      trigger: "blur",
-    },
+      trigger: "blur"
+    }
   ],
   password: [
     {
       required: true,
       message: "密码不能为空",
-      trigger: "blur",
-    },
-  ],
+      trigger: "blur"
+    }
+  ]
 };
 
 const onSubmit = () => {

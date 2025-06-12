@@ -3,7 +3,7 @@ import { getToken } from "@/utils/cookie";
 
 const instance = axios.create({
   baseURL: "/api", // 你的 API 基础 URL
-  timeout: 7000, // 请求超时时间
+  timeout: 7000 // 请求超时时间
 });
 
 // 请求拦截器

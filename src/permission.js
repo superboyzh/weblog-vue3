@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
 });
 
 // 全局路由后置守卫
-router.afterEach((to, from) => {
+router.afterEach((to, _from) => {
   // 动态设置页面 Title
   const title = (to.meta.title ? to.meta.title : "") + " - Weblog";
   document.title = title;
